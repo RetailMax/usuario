@@ -3,15 +3,8 @@ package cap.usuario.model;
 import java.sql.Date;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Entity
-@Table(name = "usuario")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@MappedSuperclass
 public class Usuario {
 
     @Id
@@ -39,25 +32,6 @@ public class Usuario {
     @Column(nullable=false)
     private String contrasenna;
 
-    @Column(nullable=true)
-    private Integer telefono;
-
-    @Column(nullable=false)
-    private String direccion;
-
-    @Column(nullable=false)
-    private String region;
-
-    @Column(nullable=false)
-    private String ciudad;
-
-    @Column(nullable=false)
-    private String comuna;
-
-    @Column(nullable=false)
-    private Integer codigoPostal;
-
-    @Column(nullable=false)
-    private String correoElectronico;
+    //Hasta acá debería ser la clase padre. -A
 
 }
