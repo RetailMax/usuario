@@ -13,7 +13,10 @@ public class Usuario {
 
     @Column(unique=true, length=13, nullable=false)
     private String run;
-
+    
+    @Column(unique=true, length=13, nullable=false)
+    private String pasaporte;
+    
     @Column(nullable=false)
     private String pNombre;
 

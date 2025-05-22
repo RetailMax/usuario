@@ -42,4 +42,5 @@ public class Comprador extends Usuario{
     @Column(nullable=false)
     private String correoElectronico;
 
+
 }
