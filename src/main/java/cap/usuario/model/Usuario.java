@@ -3,8 +3,17 @@ package cap.usuario.model;
 import java.sql.Date;
 
 import jakarta.persistence.*;
+import lombok.*;
 
-@MappedSuperclass
+
+@Entity
+@Data
+@Inheritance(strategy = InheritanceType.JOINED)
+@Table(name = "usuario")
+@AllArgsConstructor
+@NoArgsConstructor
+
+
 public class Usuario {
 
     @Id
