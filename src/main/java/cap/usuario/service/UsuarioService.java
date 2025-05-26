@@ -16,8 +16,12 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    public List<Usuario> findAll(){
+    public List<Usuario> findAll() {
         return usuarioRepository.findAll();
     }
 
+    // 👇 Este método permite guardar usuarios
+    public Usuario save(Usuario usuario) {
+        return usuarioRepository.save(usuario);
+    }
 }
