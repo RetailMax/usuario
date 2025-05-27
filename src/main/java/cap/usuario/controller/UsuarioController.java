@@ -24,4 +24,3 @@ public class UsuarioController {
     public Usuario crearUsuario(@RequestBody Usuario nuevoUsuario) {
     return usuarioService.registrarUsuario(nuevoUsuario);
 }
-}
