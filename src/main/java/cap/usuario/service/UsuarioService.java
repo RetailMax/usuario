@@ -20,6 +20,7 @@ public class UsuarioService {
         return usuarioRepository.findAll();
     }
 
+
 //Agregar Usuario
     public Usuario registrarUsuario(Usuario usuario) {
         return usuarioRepository.save(usuario);
@@ -58,5 +59,6 @@ public class UsuarioService {
 
 
     
+
 
 }

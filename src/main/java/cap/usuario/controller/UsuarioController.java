@@ -1,7 +1,6 @@
 package cap.usuario.controller;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,12 +15,13 @@ public class UsuarioController {
     private UsuarioService usuarioService;
 
     @GetMapping
-    public List<Usuario> mostrarUsuarios(){
+    public List<Usuario> mostrarUsuarios() {
         return usuarioService.findAll();
     }
 
     @PostMapping
     public Usuario crearUsuario(@RequestBody Usuario nuevoUsuario) {
-    return usuarioService.registrarUsuario(nuevoUsuario);
+        return usuarioService.registrarUsuario(nuevoUsuario);
+    }
 }
-}
+
