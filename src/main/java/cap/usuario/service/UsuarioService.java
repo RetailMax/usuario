@@ -20,8 +20,43 @@ public class UsuarioService {
         return usuarioRepository.findAll();
     }
 
-    // 👇 Este método permite guardar usuarios
-    public Usuario save(Usuario usuario) {
+//Agregar Usuario
+    public Usuario registrarUsuario(Usuario usuario) {
         return usuarioRepository.save(usuario);
     }
+
+//Obtener usuario por ID
+    public Usuario obtenerPorId(Integer id) {
+        return usuarioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+    }
+
+
+// Eliminar Usuario
+    public void eliminarUsuario(Integer id) {
+        if (!usuarioRepository.existsById(id)) {
+            throw new RuntimeException("Usuario no encontrado");
+        }
+        usuarioRepository.deleteById(id);
+    }
+
+    
+
+//Actualizar Usuario
+
+    public Usuario actualizarUsuario(Integer id, Usuario usuario) {
+        Usuario u = obtenerPorId(id);
+        u.setPNombre(usuario.getPNombre());
+        u.setSNombre(usuario.getSNombre());
+        u.setAPaterno(usuario.getAPaterno());
+        u.setAMaterno(usuario.getAMaterno());
+        u.setFechaNacimiento(usuario.getFechaNacimiento());
+        u.setContrasenna(usuario.getContrasenna());
+    
+        return usuarioRepository.save(u);
+    }
+
+
+    
+
 }

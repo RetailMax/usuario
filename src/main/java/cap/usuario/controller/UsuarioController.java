@@ -22,6 +22,6 @@ public class UsuarioController {
 
     @PostMapping
     public Usuario crearUsuario(@RequestBody Usuario nuevoUsuario) {
-        return usuarioService.save(nuevoUsuario);
-    }
+    return usuarioService.registrarUsuario(nuevoUsuario);
+}
 }
