@@ -16,6 +16,7 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+//Listar usuarios
     public List<Usuario> findAll() {
         return usuarioRepository.findAll();
     }
@@ -31,7 +32,6 @@ public class UsuarioService {
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
     }
 
-
 // Eliminar Usuario
     public void eliminarUsuario(Integer id) {
         if (!usuarioRepository.existsById(id)) {
@@ -39,8 +39,6 @@ public class UsuarioService {
         }
         usuarioRepository.deleteById(id);
     }
-
-    
 
 //Actualizar Usuario
 
@@ -55,6 +53,5 @@ public class UsuarioService {
     
         return usuarioRepository.save(u);
     }
-
 
 }
