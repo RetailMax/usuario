@@ -37,7 +37,7 @@ public class Usuario {
     private Date fechaNacimiento;
 
     @Column(nullable=false)
-    private String rolUsuario;
+    private Rol rolUsuario;
 
     @Column(nullable=false)
     private String contrasenna;
