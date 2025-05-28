@@ -5,14 +5,12 @@ import java.sql.Date;
 import jakarta.persistence.*;
 import lombok.*;
 
-
 @Entity
 @Data
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "usuario")
 @AllArgsConstructor
 @NoArgsConstructor
-
 
 public class Usuario {
 
@@ -39,8 +37,9 @@ public class Usuario {
     private Date fechaNacimiento;
 
     @Column(nullable=false)
-    private String contrasenna;
+    private String rolUsuario;
 
-    //Hasta acá debería ser la clase padre. -A
+    @Column(nullable=false)
+    private String contrasenna;
 
 }
