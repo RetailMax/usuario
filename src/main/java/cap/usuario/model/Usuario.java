@@ -36,7 +36,8 @@ public class Usuario {
     @Column(nullable=false)
     private Date fechaNacimiento;
 
-    @Column(nullable=false)
+    @OneToOne
+    @JoinColumn(name = "rol_id")
     private Rol rolUsuario;
 
     @Column(nullable=false)
