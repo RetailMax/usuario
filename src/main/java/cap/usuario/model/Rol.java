@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name="rol")
+@Table(name = "rol")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -12,9 +12,9 @@ public class Rol {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idRol;
+    private Integer id;
 
-    @Column(nullable=false)
-    private String nombreRol;
-
+    @Column(nullable = false)
+    private String nombre;
 }
+
