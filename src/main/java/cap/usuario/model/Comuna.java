@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 
-
 @Entity
 @Table(name = "comuna")
 @Data
@@ -16,4 +15,10 @@ public class Comuna {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idComuna;
 
+    @Column(nullable = false)
+    private String nombre;
+
+    @ManyToOne
+    @JoinColumn(name = "ciudad_id")
+    private Ciudad ciudad;
 }
