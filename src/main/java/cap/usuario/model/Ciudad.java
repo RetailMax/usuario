@@ -14,4 +14,10 @@ public class Ciudad {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idCiudad;
 
+    @Column(nullable = false)
+    private String nombre;
+
+    @ManyToOne
+    @JoinColumn(name = "region_id")
+    private Region region;
 }

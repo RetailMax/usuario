@@ -17,4 +17,7 @@ public class Region {
     @Column(nullable = false)
     private String nombre;
 
+    @ManyToOne
+    @JoinColumn(name = "pais_id", nullable = false)
+    private Pais pais;
 }
