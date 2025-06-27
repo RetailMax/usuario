@@ -13,10 +13,10 @@
     </parent>
 
     <groupId>com.retailmax</groupId>
-    <artifactId>inventario-service</artifactId>
+    <artifactId>usuario-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Inventario Service</name>
-    <description>Microservicio de inventario para RetailMax</description>
+    <name>Usuario Service</name>
+    <description>Microservicio de usuario para RetailMax</description>
 
     <properties>
         <java.version>21</java.version>
