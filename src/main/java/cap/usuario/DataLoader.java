@@ -8,7 +8,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Random;
 
@@ -33,8 +32,17 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Faker faker = new Faker();
-        Random random = new Random();
+        // SOLO PARA DESARROLLO: borrar todos los datos antes de cargar nuevos
+        direccionEnvioRepository.deleteAll();
+        compradorRepository.deleteAll();
+        comunaRepository.deleteAll();
+        ciudadRepository.deleteAll();
+        regionRepository.deleteAll();
+        paisRepository.deleteAll();
+        rolRepository.deleteAll();
+
+        final Faker faker = new Faker();
+        final Random random = new Random();
 
         // Crear roles
         Rol compradorRol = new Rol();
@@ -46,18 +54,26 @@ public class DataLoader implements CommandLineRunner {
         rolRepository.saveAll(List.of(compradorRol, adminRol));
 
         // Crear país
-        Pais chile = new Pais(null, "Chile");
+        Pais chile = new Pais();
+        chile.setNombre("Chile");
         paisRepository.save(chile);
 
         // Crear región
-        Region region = new Region(null, "Región Metropolitana", chile);
+        Region region = new Region();
+        region.setNombre("Región Metropolitana");
+        region.setPais(chile);
         regionRepository.save(region);
 
         // Crear ciudad y comuna
-        Ciudad ciudad = new Ciudad(null, "Santiago", region);
+        Ciudad ciudad = new Ciudad();
+        ciudad.setNombre("Santiago");
+        ciudad.setRegion(region);
+        ciudad.setCodigoPostal(String.valueOf(faker.number().numberBetween(1000, 9999)));
         ciudadRepository.save(ciudad);
 
-        Comuna comuna = new Comuna(null, "Maipú", ciudad);
+        Comuna comuna = new Comuna();
+        comuna.setNombre("Maipú");
+        comuna.setCiudad(ciudad);
         comunaRepository.save(comuna);
 
         // Crear 10 compradores con direcciones
@@ -70,13 +86,11 @@ public class DataLoader implements CommandLineRunner {
             comprador.setAPaterno(faker.name().lastName());
             comprador.setAMaterno(faker.name().lastName());
 
-            LocalDate fecha = LocalDate.of(
-                    1990 + random.nextInt(15),
-                    1 + random.nextInt(12),
-                    1 + random.nextInt(28));
-            comprador.setFechaNacimiento(java.sql.Date.valueOf(fecha));
+            // Fecha de nacimiento realista (entre 18 y  años)
+            java.util.Date fechaNacimiento = faker.date().birthday(18, 80);
+            comprador.setFechaNacimiento(new java.sql.Date(fechaNacimiento.getTime()));
 
-            comprador.setRun(String.valueOf(faker.number().numberBetween(10000000, 25000000)) + "-" + faker.number().digit());
+            comprador.setRun(faker.number().numberBetween(10000000, 25000000) + "-" + faker.number().digit());
             comprador.setContrasenna("123456");
             comprador.setRolUsuario(compradorRol);
 
@@ -102,5 +116,6 @@ public class DataLoader implements CommandLineRunner {
             direccion.setUsuario(comprador); // comprador ya es un Usuario
             direccionEnvioRepository.save(direccion);
         }
+        System.out.println("DataLoader: Datos de desarrollo cargados correctamente.");
     }
 }

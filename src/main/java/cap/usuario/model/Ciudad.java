@@ -20,4 +20,7 @@ public class Ciudad {
     @ManyToOne
     @JoinColumn(name = "region_id")
     private Region region;
+
+    @Column(nullable = true)
+    private String codigoPostal;
 }

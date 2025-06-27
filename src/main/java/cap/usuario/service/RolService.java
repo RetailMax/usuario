@@ -36,7 +36,6 @@ public class RolService {
     public Rol actualizarRol(Integer id, Rol rol){
         Rol r = buscarRolPorId(id);
         r.setNombre(rol.getNombre());
-        r.setNombre(rol.getNombre());
         return rolRepository.save(r);
     }
 

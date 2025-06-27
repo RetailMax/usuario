@@ -43,4 +43,7 @@ public class Usuario {
     @Column(nullable=false)
     private String contrasenna;
 
+    @Column(nullable=false, unique=true, length=100)
+    private String correoElectronico;
+
 }
