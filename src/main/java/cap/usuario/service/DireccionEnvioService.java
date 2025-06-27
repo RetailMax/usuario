@@ -12,19 +12,29 @@ public class DireccionEnvioService {
     @Autowired
     private DireccionEnvioRepository direccionEnvioRepository;
 
-    public List<DireccionEnvio> obtenerDireccionesPorUsuario(Integer idUsuario) {
-        return direccionEnvioRepository.findByUsuarioIdUsuario(idUsuario);
+    //Buscar direccion por id
+    public DireccionEnvio obtenerDireccionPorId(Integer idUsuario) {
+        return direccionEnvioRepository.findById(idUsuario)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
     }
 
+    //Listar todas las direcciones
+    public List<DireccionEnvio> obtenerTodasLasDirecciones() {
+        return direccionEnvioRepository.findAll();
+    }
+
+    //Agregar Direccion
     public DireccionEnvio agregarDireccion(DireccionEnvio direccion) {
         return direccionEnvioRepository.save(direccion);
     }
 
+    //Actualizar dirección
     public DireccionEnvio actualizarDireccion(Integer id, DireccionEnvio direccion) {
         direccion.setIdDireccion(id);
         return direccionEnvioRepository.save(direccion);
     }
 
+    //Eliminar dirección
     public void eliminarDireccion(Integer id) {
         direccionEnvioRepository.deleteById(id);
     }

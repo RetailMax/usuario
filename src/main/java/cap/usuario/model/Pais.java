@@ -19,7 +19,4 @@ public class Pais {
     @Column(nullable = false)
     private String nombre;
 
-    
-
-    
 }
