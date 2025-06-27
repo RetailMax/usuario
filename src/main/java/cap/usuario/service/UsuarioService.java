@@ -50,6 +50,7 @@ public class UsuarioService {
         u.setAMaterno(usuario.getAMaterno());
         u.setFechaNacimiento(usuario.getFechaNacimiento());
         u.setContrasenna(usuario.getContrasenna());
+        u.setCorreoElectronico(usuario.getCorreoElectronico());
     
         return usuarioRepository.save(u);
     }
