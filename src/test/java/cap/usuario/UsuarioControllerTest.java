@@ -103,6 +103,7 @@ public class UsuarioControllerTest {
         verify(usuarioService, times(1)).eliminarUsuario(1);
     }
 
+
     @Test
     void testAsignarRoles() throws Exception {
         List<Integer> rolesIds = List.of(1, 2);
@@ -117,4 +118,5 @@ public class UsuarioControllerTest {
                 .andExpect(jsonPath("$.roles[0].nombre").value("ADMIN"))
                 .andExpect(jsonPath("$.roles[1].nombre").value("USER"));
     }
+
 }
