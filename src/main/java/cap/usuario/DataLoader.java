@@ -17,8 +17,6 @@ import java.util.Random;
 public class DataLoader implements CommandLineRunner {
 
     @Autowired
-    private UsuarioRepository usuarioRepository;
-    @Autowired
     private RolRepository rolRepository;
     @Autowired
     private CompradorRepository compradorRepository;
