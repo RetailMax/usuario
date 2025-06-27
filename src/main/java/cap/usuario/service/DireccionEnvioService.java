@@ -12,9 +12,10 @@ public class DireccionEnvioService {
     @Autowired
     private DireccionEnvioRepository direccionEnvioRepository;
 
-    //Buscar direccion por id de usuario
-    public List<DireccionEnvio> obtenerDireccionesPorUsuario(Integer idUsuario) {
-        return direccionEnvioRepository.findByUsuarioIdUsuario(idUsuario);
+    //Buscar direccion por id
+    public DireccionEnvio obtenerDireccionPorId(Integer idUsuario) {
+        return direccionEnvioRepository.findById(idUsuario)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
     }
 
     //Listar todas las direcciones

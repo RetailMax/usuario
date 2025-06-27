@@ -6,5 +6,4 @@ import cap.usuario.model.Rol;
 
 @Repository
 public interface RolRepository extends JpaRepository<Rol, Integer>{
-
 }

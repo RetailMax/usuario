@@ -27,7 +27,7 @@ public class RolController {
     @Autowired
     private RolModelAssembler assembler;
 
-    // Crear un nuevo rol
+    //Crear un nuevo rol
     @PostMapping(produces = MediaTypes.HAL_JSON_VALUE)
     public ResponseEntity<EntityModel<Rol>> crearRol(@RequestBody Rol rol) {
         Rol rolCreado = rolService.guardarRol(rol);
@@ -36,7 +36,7 @@ public class RolController {
         .body(assembler.toModel(rolCreado));
     }
 
-    // Listar todos los roles
+    //Listar todos los roles
     @GetMapping(produces = MediaTypes.HAL_JSON_VALUE)
     public CollectionModel<EntityModel<Rol>> listarRoles() {
         List<EntityModel<Rol>> roles = rolService.listarRoles().stream()
@@ -54,7 +54,7 @@ public class RolController {
         return assembler.toModel(rol);
     }
 
-    // Actualizar un rol
+    //Actualizar un rol
     @PutMapping(value = "/{id}", produces = MediaTypes.HAL_JSON_VALUE)
     public ResponseEntity<EntityModel<Rol>> actualizarRol(@PathVariable Integer id, @RequestBody Rol rolActualizado) {
         rolActualizado.setId(id);
@@ -62,7 +62,7 @@ public class RolController {
         return ResponseEntity.ok(assembler.toModel(rolFinal));
     }
 
-    // Eliminar un rol
+    //Eliminar un rol
     @DeleteMapping(value = "/{id}", produces = MediaTypes.HAL_JSON_VALUE)
     public ResponseEntity<?> eliminarRol(@PathVariable Integer id) {
         rolService.eliminarRol(id);
