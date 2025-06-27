@@ -1,6 +1,7 @@
 package cap.usuario;
 
 import cap.usuario.controller.UsuarioController;
+import cap.usuario.model.Rol;
 import cap.usuario.model.Usuario;
 import cap.usuario.service.UsuarioService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -100,5 +101,20 @@ public class UsuarioControllerTest {
                 .andExpect(status().isOk());
 
         verify(usuarioService, times(1)).eliminarUsuario(1);
+    }
+
+    @Test
+    void testAsignarRoles() throws Exception {
+        List<Integer> rolesIds = List.of(1, 2);
+        usuario.setRoles(List.of(new Rol(1, "ADMIN"), new Rol(2, "USER")));
+
+        when(usuarioService.asignarRoles(eq(1), eq(rolesIds))).thenReturn(usuario);
+
+        mockMvc.perform(post("/api/usuarios/1/roles")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(rolesIds)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.roles[0].nombre").value("ADMIN"))
+                .andExpect(jsonPath("$.roles[1].nombre").value("USER"));
     }
 }

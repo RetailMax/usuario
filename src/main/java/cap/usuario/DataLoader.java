@@ -8,6 +8,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -92,7 +93,7 @@ public class DataLoader implements CommandLineRunner {
 
             comprador.setRun(faker.number().numberBetween(10000000, 25000000) + "-" + faker.number().digit());
             comprador.setContrasenna("123456");
-            comprador.setRolUsuario(compradorRol);
+            comprador.setRoles(Collections.singletonList(compradorRol));
 
             // Datos propios del Comprador
             comprador.setTelefono(faker.number().numberBetween(900000000, 999999999));

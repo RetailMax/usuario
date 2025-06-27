@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cap.usuario.model.Usuario;
+import cap.usuario.model.Rol;
 import cap.usuario.repository.UsuarioRepository;
+import cap.usuario.repository.RolRepository;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -15,6 +17,9 @@ public class UsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private RolRepository rolRepository;
 
 //Listar usuarios
     public List<Usuario> findAll() {
@@ -53,6 +58,13 @@ public class UsuarioService {
         u.setCorreoElectronico(usuario.getCorreoElectronico());
     
         return usuarioRepository.save(u);
+    }
+
+    public Usuario asignarRoles(Integer idUsuario, List<Integer> idsRoles) {
+        Usuario usuario = obtenerPorId(idUsuario);
+        List<Rol> roles = rolRepository.findAllById(idsRoles);
+        usuario.setRoles(roles);
+        return usuarioRepository.save(usuario);
     }
 
 }

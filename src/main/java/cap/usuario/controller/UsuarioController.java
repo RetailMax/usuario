@@ -73,4 +73,12 @@ public class UsuarioController {
         usuarioService.eliminarUsuario(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PostMapping("/{id}/roles")
+    public ResponseEntity<Usuario> asignarRoles(
+            @PathVariable Integer id,
+            @RequestBody List<Integer> idsRoles) {
+        Usuario usuarioActualizado = usuarioService.asignarRoles(id, idsRoles);
+        return ResponseEntity.ok(usuarioActualizado);
+    }
 }

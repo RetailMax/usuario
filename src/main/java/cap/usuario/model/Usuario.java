@@ -1,6 +1,7 @@
 package cap.usuario.model;
 
 import java.sql.Date;
+import java.util.List;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -36,9 +37,13 @@ public class Usuario {
     @Column(nullable=false)
     private Date fechaNacimiento;
 
-    @OneToOne
-    @JoinColumn(name = "rol_id")
-    private Rol rolUsuario;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "usuario_rol",
+        joinColumns = @JoinColumn(name = "usuario_id"),
+        inverseJoinColumns = @JoinColumn(name = "rol_id")
+    )
+    private List<Rol> roles;
 
     @Column(nullable=false)
     private String contrasenna;
