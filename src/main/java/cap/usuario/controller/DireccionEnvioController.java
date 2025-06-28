@@ -21,10 +21,10 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 public class DireccionEnvioController {
 
     @Autowired
-    private DireccionEnvioService direccionEnvioService;
+    DireccionEnvioService direccionEnvioService;
 
     @Autowired
-    private DireccionEnvioModelAssembler assembler;
+    DireccionEnvioModelAssembler assembler;
 
     //Listar direcciones de envio
     @GetMapping(produces = MediaTypes.HAL_JSON_VALUE)

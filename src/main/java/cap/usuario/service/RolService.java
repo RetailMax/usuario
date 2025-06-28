@@ -14,7 +14,7 @@ import jakarta.transaction.Transactional;
 public class RolService {
 
     @Autowired
-    private RolRepository rolRepository;
+    RolRepository rolRepository;
 
     //Listar roles
     public List<Rol> listarRoles(){

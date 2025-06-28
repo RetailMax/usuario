@@ -14,7 +14,7 @@ import jakarta.transaction.Transactional;
 public class UsuarioService {
 
     @Autowired
-    private UsuarioRepository usuarioRepository;
+    UsuarioRepository usuarioRepository;
 
 //Listar usuarios
     public List<Usuario> findAll() {
