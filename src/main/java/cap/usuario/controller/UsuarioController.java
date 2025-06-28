@@ -23,10 +23,10 @@ import cap.usuario.service.UsuarioService;
 public class UsuarioController {
 
     @Autowired
-    private UsuarioService usuarioService;
+    UsuarioService usuarioService;
 
     @Autowired
-    private UsuarioModelAssembler assembler;
+    UsuarioModelAssembler assembler;
 
     //Listar usuarios
     @GetMapping(produces = MediaTypes.HAL_JSON_VALUE)

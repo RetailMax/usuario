@@ -22,10 +22,10 @@ import java.util.stream.Collectors;
 public class RolController {
 
     @Autowired
-    private RolService rolService;
+    RolService rolService;
 
     @Autowired
-    private RolModelAssembler assembler;
+    RolModelAssembler assembler;
 
     //Crear un nuevo rol
     @PostMapping(produces = MediaTypes.HAL_JSON_VALUE)

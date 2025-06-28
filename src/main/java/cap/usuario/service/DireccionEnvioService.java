@@ -10,7 +10,7 @@ import java.util.List;
 public class DireccionEnvioService {
 
     @Autowired
-    private DireccionEnvioRepository direccionEnvioRepository;
+    DireccionEnvioRepository direccionEnvioRepository;
 
     //Buscar direccion por id
     public DireccionEnvio obtenerDireccionPorId(Integer idUsuario) {

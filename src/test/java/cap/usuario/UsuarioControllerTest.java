@@ -1,4 +1,5 @@
 package cap.usuario;
+
 import cap.usuario.assemblers.UsuarioModelAssembler;
 import cap.usuario.controller.UsuarioController;
 import cap.usuario.model.Rol;
