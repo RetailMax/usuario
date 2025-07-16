@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
@@ -71,7 +72,7 @@ public class RolControllerTest {
             when(rolService.listarRoles()).thenReturn(roles);
 
             mockMvc.perform(get("/api/v1/roles")
-                            .accept(MediaType.APPLICATION_JSON))
+                            .accept(MediaTypes.HAL_JSON))
                     .andExpect(status().isOk())
                     .andExpect(content().contentType("application/hal+json"))
                     .andExpect(jsonPath("$._embedded.rolList", hasSize(2)))
@@ -101,7 +102,7 @@ public class RolControllerTest {
             when(rolService.listarRoles()).thenReturn(Collections.emptyList());
 
             mockMvc.perform(get("/api/v1/roles")
-                            .accept(MediaType.APPLICATION_JSON))
+                            .accept(MediaTypes.HAL_JSON))
                     .andExpect(status().isOk())
                     .andExpect(content().contentType("application/hal+json"))
                     .andExpect(jsonPath("$._embedded").doesNotExist());
@@ -116,7 +117,7 @@ public class RolControllerTest {
             when(rolService.listarRoles()).thenThrow(new RuntimeException("Error interno"));
 
             mockMvc.perform(get("/api/v1/roles")
-                            .accept(MediaType.APPLICATION_JSON))
+                            .accept(MediaTypes.HAL_JSON))
                     .andExpect(status().isInternalServerError());
 
             verify(rolService, times(1)).listarRoles();
@@ -146,7 +147,7 @@ public class RolControllerTest {
             when(rolService.buscarRolPorId(1)).thenReturn(rol);
 
             mockMvc.perform(get("/api/v1/roles/1")
-                            .accept(MediaType.APPLICATION_JSON))
+                            .accept(MediaTypes.HAL_JSON))
                     .andExpect(status().isOk())
                     .andExpect(content().contentType("application/hal+json"))
                     .andExpect(jsonPath("$.id").value(1))
@@ -174,7 +175,7 @@ public class RolControllerTest {
             when(rolService.buscarRolPorId(999)).thenThrow(new RuntimeException("Rol no encontrado"));
 
             mockMvc.perform(get("/api/v1/roles/999")
-                            .accept(MediaType.APPLICATION_JSON))
+                            .accept(MediaTypes.HAL_JSON))
                     .andExpect(status().isInternalServerError());
 
             verify(rolService, times(1)).buscarRolPorId(999);
@@ -184,7 +185,7 @@ public class RolControllerTest {
         @DisplayName("Debería validar formato de ID")
         void testGetRolById_InvalidIdFormat() throws Exception {
             mockMvc.perform(get("/api/v1/roles/invalid")
-                            .accept(MediaType.APPLICATION_JSON))
+                            .accept(MediaTypes.HAL_JSON))
                     .andExpect(status().isBadRequest());
 
             verify(rolService, never()).buscarRolPorId(any());

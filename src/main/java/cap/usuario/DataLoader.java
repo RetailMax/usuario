@@ -84,21 +84,21 @@ public class DataLoader implements CommandLineRunner {
             comprador.setAPaterno(faker.name().lastName());
             comprador.setAMaterno(faker.name().lastName());
 
-            // Fecha de nacimiento realista (entre 18 y  años)
-            java.util.Date fechaNacimiento = faker.date().birthday(18, 80);
-            comprador.setFechaNacimiento(new java.sql.Date(fechaNacimiento.getTime()));
+            // Fecha de nacimiento realista (entre 18 y 80 años)
+            java.time.LocalDate fechaLocal = faker.date().birthday(18, 80).toInstant()
+                    .atZone(java.time.ZoneId.systemDefault()).toLocalDate();
+            comprador.setFechaNacimiento(java.sql.Date.valueOf(fechaLocal));
 
             comprador.setRun(faker.number().numberBetween(10000000, 25000000) + "-" + faker.number().digit());
             comprador.setContrasenna("123456");
             comprador.setRolUsuario(compradorRol);
 
             // Datos propios del Comprador
-            comprador.setTelefono(faker.number().numberBetween(900000000, 999999999));
-            comprador.setDireccion(faker.address().streetAddress());
-            comprador.setRegion(region);
-            comprador.setCiudad(ciudad);
-            comprador.setComuna(comuna);
-            comprador.setCodigoPostal(faker.number().numberBetween(1000, 9999));
+            comprador.setTelefono(String.valueOf(faker.number().numberBetween(900000000, 999999999)));
+            comprador.setDireccionPrincipal(faker.address().streetAddress());
+            comprador.setRegion(region.getNombre());
+            comprador.setCiudad(ciudad.getNombre());
+            comprador.setComuna(comuna.getNombre());
             comprador.setCorreoElectronico(faker.internet().emailAddress());
 
             // Guardar comprador (también guarda como Usuario por herencia)

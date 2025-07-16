@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -23,6 +24,7 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.*;
+import static org.mockito.ArgumentMatchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import org.mockito.ArgumentMatchers;
@@ -89,6 +91,7 @@ public class DireccionEnvioControllerTest {
             // Given
             List<DireccionEnvio> direcciones = Arrays.asList(direccionEnvio, direccionEnvio2);
             when(direccionEnvioService.obtenerTodasLasDirecciones()).thenReturn(direcciones);
+            when(assembler.toModel(ArgumentMatchers.any(DireccionEnvio.class))).thenReturn(EntityModel.of(direccionEnvio));
 
             // When & Then
             mockMvc.perform(get("/api/v1/direcciones-envio")
@@ -140,6 +143,7 @@ public class DireccionEnvioControllerTest {
         void debeRetornarDireccionExistentePorId() throws Exception {
             // Given
             when(direccionEnvioService.obtenerDireccionPorId(1)).thenReturn(direccionEnvio);
+            when(assembler.toModel(direccionEnvio)).thenReturn(EntityModel.of(direccionEnvio));
 
             // When & Then
             mockMvc.perform(get("/api/v1/direcciones-envio/1")
@@ -195,6 +199,7 @@ public class DireccionEnvioControllerTest {
 
             when(direccionEnvioService.agregarDireccion(ArgumentMatchers.any(DireccionEnvio.class)))
                     .thenReturn(direccionEnvio);
+            when(assembler.toModel(direccionEnvio)).thenReturn(EntityModel.of(direccionEnvio));
 
             // When & Then
             mockMvc.perform(post("/api/v1/direcciones-envio")
@@ -271,6 +276,7 @@ public class DireccionEnvioControllerTest {
 
             when(direccionEnvioService.actualizarDireccion(ArgumentMatchers.eq(1), ArgumentMatchers.any(DireccionEnvio.class)))
                     .thenReturn(direccionActualizada);
+            when(assembler.toModel(direccionActualizada)).thenReturn(EntityModel.of(direccionActualizada));
 
             // When & Then
             mockMvc.perform(put("/api/v1/direcciones-envio/1")
@@ -369,6 +375,7 @@ public class DireccionEnvioControllerTest {
         void debeAceptarYProducirHalJson() throws Exception {
             // Given
             when(direccionEnvioService.obtenerDireccionPorId(1)).thenReturn(direccionEnvio);
+            when(assembler.toModel(direccionEnvio)).thenReturn(EntityModel.of(direccionEnvio));
 
             // When & Then
             mockMvc.perform(get("/api/v1/direcciones-envio/1")
@@ -382,6 +389,7 @@ public class DireccionEnvioControllerTest {
         void debeManjarAcceptHeaderNoSoportado() throws Exception {
             // Given
             when(direccionEnvioService.obtenerDireccionPorId(1)).thenReturn(direccionEnvio);
+            when(assembler.toModel(direccionEnvio)).thenReturn(EntityModel.of(direccionEnvio));
 
             // When & Then
             mockMvc.perform(get("/api/v1/direcciones-envio/1")
@@ -400,6 +408,7 @@ public class DireccionEnvioControllerTest {
             // Given
             List<DireccionEnvio> direccionesUsuario = Arrays.asList(direccionEnvio, direccionEnvio2);
             when(direccionEnvioService.obtenerTodasLasDirecciones()).thenReturn(direccionesUsuario);
+            when(assembler.toModel(ArgumentMatchers.any(DireccionEnvio.class))).thenReturn(EntityModel.of(direccionEnvio));
 
             // When & Then
             mockMvc.perform(get("/api/v1/direcciones-envio")
@@ -414,6 +423,7 @@ public class DireccionEnvioControllerTest {
         void debeValidarQueElAssemblerSeaLlamadoCorrectamente() throws Exception {
             // Given
             when(direccionEnvioService.obtenerDireccionPorId(1)).thenReturn(direccionEnvio);
+            when(assembler.toModel(direccionEnvio)).thenReturn(EntityModel.of(direccionEnvio));
 
             // When & Then
             mockMvc.perform(get("/api/v1/direcciones-envio/1")

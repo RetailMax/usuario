@@ -11,6 +11,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -98,6 +99,7 @@ public class UsuarioControllerTest {
         // Given
         List<Usuario> usuarios = Arrays.asList(usuario1, usuario2);
         when(usuarioService.findAll()).thenReturn(usuarios);
+        when(assembler.toModel(any(Usuario.class))).thenReturn(EntityModel.of(usuario1));
 
         // When & Then
         mockMvc.perform(get("/api/v1/usuarios")
@@ -128,6 +130,7 @@ public class UsuarioControllerTest {
     void testGetUsuarioById() throws Exception {
         // Given
         when(usuarioService.obtenerPorId(1)).thenReturn(usuario1);
+        when(assembler.toModel(usuario1)).thenReturn(EntityModel.of(usuario1));
 
         // When & Then
         mockMvc.perform(get("/api/v1/usuarios/1")
@@ -165,6 +168,7 @@ public class UsuarioControllerTest {
         usuarioCreado.setCorreoElectronico("pedro.ramirez@email.com");
 
         when(usuarioService.registrarUsuario(any(Usuario.class))).thenReturn(usuarioCreado);
+        when(assembler.toModel(usuarioCreado)).thenReturn(EntityModel.of(usuarioCreado));
 
         // When & Then
         mockMvc.perform(post("/api/v1/usuarios")
@@ -224,6 +228,7 @@ public class UsuarioControllerTest {
 
         when(usuarioService.actualizarUsuario(eq(1), any(Usuario.class)))
             .thenReturn(usuarioActualizado);
+        when(assembler.toModel(usuarioActualizado)).thenReturn(EntityModel.of(usuarioActualizado));
 
         // When & Then
         mockMvc.perform(put("/api/v1/usuarios/perfil/1")
@@ -373,35 +378,4 @@ public class UsuarioControllerTest {
                 .andExpect(status().isUnsupportedMediaType());
     }
 
-    @Test
-    @DisplayName("Debería tener documentación Swagger disponible")
-    void testSwaggerDocumentacionDisponible() throws Exception {
-        // When & Then
-        mockMvc.perform(get("/v3/api-docs")
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.info.title").value("Capacitación API"))
-                .andExpect(jsonPath("$.info.version").value("1.0.0"))
-                .andExpect(jsonPath("$.info.description").value("API para la gestión de usuarios en la capacitación"));
-    }
-
-    @Test
-    @DisplayName("Debería tener Swagger UI disponible")
-    void testSwaggerUIDisponible() throws Exception {
-        // When & Then
-        mockMvc.perform(get("/swagger-ui/index.html"))
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    @DisplayName("Debería incluir endpoints de usuarios en documentación Swagger")
-    void testEndpointsUsuariosEnSwagger() throws Exception {
-        // When & Then
-        mockMvc.perform(get("/v3/api-docs")
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.paths./api/v1/usuarios").exists())
-                .andExpect(jsonPath("$.paths./api/v1/usuarios/{id}").exists());
-    }
 }

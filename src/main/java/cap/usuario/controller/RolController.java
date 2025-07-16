@@ -30,42 +30,74 @@ public class RolController {
     //Crear un nuevo rol
     @PostMapping(produces = MediaTypes.HAL_JSON_VALUE)
     public ResponseEntity<EntityModel<Rol>> crearRol(@RequestBody Rol rol) {
-        Rol rolCreado = rolService.guardarRol(rol);
-        return ResponseEntity
-        .created(linkTo(methodOn(RolController.class).buscarRol(rolCreado.getId())).toUri())
-        .body(assembler.toModel(rolCreado));
+        try {
+            // Validar que el rol tenga los campos requeridos
+            if (rol == null || rol.getNombre() == null || rol.getNombre().trim().isEmpty()) {
+                return ResponseEntity.badRequest().build();
+            }
+            
+            Rol rolCreado = rolService.guardarRol(rol);
+            return ResponseEntity
+                .created(linkTo(methodOn(RolController.class).buscarRol(rolCreado.getId())).toUri())
+                .contentType(MediaTypes.HAL_JSON)
+                .body(assembler.toModel(rolCreado));
+        } catch (RuntimeException e) {
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     //Listar todos los roles
     @GetMapping(produces = MediaTypes.HAL_JSON_VALUE)
-    public CollectionModel<EntityModel<Rol>> listarRoles() {
-        List<EntityModel<Rol>> roles = rolService.listarRoles().stream()
-                .map(assembler::toModel)
-                .collect(Collectors.toList());
+    public ResponseEntity<CollectionModel<EntityModel<Rol>>> listarRoles() {
+        try {
+            List<EntityModel<Rol>> roles = rolService.listarRoles().stream()
+                    .map(assembler::toModel)
+                    .collect(Collectors.toList());
 
-        return CollectionModel.of(roles,
-                linkTo(methodOn(RolController.class).listarRoles()).withSelfRel());
+            return ResponseEntity.ok()
+                    .contentType(MediaTypes.HAL_JSON)
+                    .body(CollectionModel.of(roles,
+                            linkTo(methodOn(RolController.class).listarRoles()).withSelfRel()));
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     //Buscar por id
     @GetMapping(value = "/{id}", produces = MediaTypes.HAL_JSON_VALUE)
-    public EntityModel<Rol> buscarRol(@PathVariable Integer id) {
-        Rol rol = rolService.buscarRolPorId(id);
-        return assembler.toModel(rol);
+    public ResponseEntity<EntityModel<Rol>> buscarRol(@PathVariable Integer id) {
+        try {
+            Rol rol = rolService.buscarRolPorId(id);
+            return ResponseEntity.ok()
+                    .contentType(MediaTypes.HAL_JSON)
+                    .body(assembler.toModel(rol));
+        } catch (RuntimeException e) {
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     //Actualizar un rol
     @PutMapping(value = "/{id}", produces = MediaTypes.HAL_JSON_VALUE)
     public ResponseEntity<EntityModel<Rol>> actualizarRol(@PathVariable Integer id, @RequestBody Rol rolActualizado) {
-        rolActualizado.setId(id);
-        Rol rolFinal = rolService.actualizarRol(id, rolActualizado);
-        return ResponseEntity.ok(assembler.toModel(rolFinal));
+        try {
+            rolActualizado.setId(id);
+            Rol rolFinal = rolService.actualizarRol(id, rolActualizado);
+            return ResponseEntity.ok()
+                    .contentType(MediaTypes.HAL_JSON)
+                    .body(assembler.toModel(rolFinal));
+        } catch (RuntimeException e) {
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     //Eliminar un rol
     @DeleteMapping(value = "/{id}", produces = MediaTypes.HAL_JSON_VALUE)
     public ResponseEntity<?> eliminarRol(@PathVariable Integer id) {
-        rolService.eliminarRol(id);
-        return ResponseEntity.noContent().build();
+        try {
+            rolService.eliminarRol(id);
+            return ResponseEntity.noContent().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.internalServerError().build();
+        }
     }
 }

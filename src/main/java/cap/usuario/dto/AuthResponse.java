@@ -1,0 +1,16 @@
+package cap.usuario.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class AuthResponse {
+    private String token;
+    private String tipo;
+    private Integer usuarioId;
+    private String rol;
+    private Long expiracion;
+}

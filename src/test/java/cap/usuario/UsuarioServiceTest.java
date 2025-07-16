@@ -49,6 +49,11 @@ public class UsuarioServiceTest {
         usuario.setAPaterno("Pérez");
         usuario.setAMaterno("González");
         usuario.setFechaNacimiento(Date.valueOf("1990-01-01"));
+        usuario.setTelefono("987654321");
+        usuario.setDireccionPrincipal("Calle Falsa 123");
+        usuario.setComuna("Maipú");
+        usuario.setCiudad("Santiago");
+        usuario.setRegion("Región Metropolitana");
         usuario.setRolUsuario(rol);
         usuario.setContrasenna("password123");
         usuario.setCorreoElectronico("juan.perez@email.com");
@@ -185,6 +190,11 @@ public class UsuarioServiceTest {
         usuarioActualizado.setAPaterno("García");
         usuarioActualizado.setAMaterno("Rodríguez");
         usuarioActualizado.setFechaNacimiento(Date.valueOf("1985-05-15"));
+        usuarioActualizado.setTelefono("912345678");
+        usuarioActualizado.setDireccionPrincipal("Avenida Siempre Viva 742");
+        usuarioActualizado.setComuna("Las Condes");
+        usuarioActualizado.setCiudad("Santiago");
+        usuarioActualizado.setRegion("Región Metropolitana");
         usuarioActualizado.setContrasenna("newpassword456");
         usuarioActualizado.setCorreoElectronico("pedro.garcia@email.com");
 
@@ -250,6 +260,11 @@ public class UsuarioServiceTest {
         usuario2.setAPaterno("García");
         usuario2.setAMaterno("López");
         usuario2.setFechaNacimiento(Date.valueOf("1985-05-15"));
+        usuario2.setTelefono("912345678");
+        usuario2.setDireccionPrincipal("Avenida Central 456");
+        usuario2.setComuna("Providencia");
+        usuario2.setCiudad("Santiago");
+        usuario2.setRegion("Región Metropolitana");
         usuario2.setRolUsuario(rol);
         usuario2.setContrasenna("admin456");
         usuario2.setCorreoElectronico("maria.garcia@email.com");
@@ -277,6 +292,11 @@ public class UsuarioServiceTest {
         assertEquals("Pérez", result.getAPaterno());
         assertEquals("González", result.getAMaterno());
         assertEquals("12345678-9", result.getRun());
+        assertEquals("987654321", result.getTelefono());
+        assertEquals("Calle Falsa 123", result.getDireccionPrincipal());
+        assertEquals("Maipú", result.getComuna());
+        assertEquals("Santiago", result.getCiudad());
+        assertEquals("Región Metropolitana", result.getRegion());
         assertEquals("juan.perez@email.com", result.getCorreoElectronico());
         assertEquals("password123", result.getContrasenna());
         assertNotNull(result.getRolUsuario());
@@ -293,6 +313,11 @@ public class UsuarioServiceTest {
         usuarioActualizado.setAPaterno("NuevoPaterno");
         usuarioActualizado.setAMaterno("NuevoMaterno");
         usuarioActualizado.setFechaNacimiento(Date.valueOf("1995-12-31"));
+        usuarioActualizado.setTelefono("999888777");
+        usuarioActualizado.setDireccionPrincipal("Nueva Dirección 789");
+        usuarioActualizado.setComuna("Ñuñoa");
+        usuarioActualizado.setCiudad("Santiago");
+        usuarioActualizado.setRegion("Región Metropolitana");
         usuarioActualizado.setContrasenna("nuevacontrasenna");
         usuarioActualizado.setCorreoElectronico("nuevo@correo.com");
 
@@ -306,6 +331,11 @@ public class UsuarioServiceTest {
         assertEquals("NuevoSegundo", usuario.getSNombre());
         assertEquals("NuevoPaterno", usuario.getAPaterno());
         assertEquals("NuevoMaterno", usuario.getAMaterno());
+        assertEquals("999888777", usuario.getTelefono());
+        assertEquals("Nueva Dirección 789", usuario.getDireccionPrincipal());
+        assertEquals("Ñuñoa", usuario.getComuna());
+        assertEquals("Santiago", usuario.getCiudad());
+        assertEquals("Región Metropolitana", usuario.getRegion());
         assertEquals("nuevacontrasenna", usuario.getContrasenna());
         assertEquals("nuevo@correo.com", usuario.getCorreoElectronico());
         

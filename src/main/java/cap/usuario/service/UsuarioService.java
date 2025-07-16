@@ -23,7 +23,29 @@ public class UsuarioService {
 
 //Agregar Usuario
     public Usuario registrarUsuario(Usuario usuario) {
+        // Validar que no exista otro usuario con el mismo correo
+        if (usuarioRepository.existsByCorreoElectronico(usuario.getCorreoElectronico())) {
+            throw new RuntimeException("Ya existe un usuario con este correo electrónico");
+        }
+        
+        // Validar que no exista otro usuario con el mismo RUN
+        if (usuarioRepository.existsByRun(usuario.getRun())) {
+            throw new RuntimeException("Ya existe un usuario con este RUN");
+        }
+        
         return usuarioRepository.save(usuario);
+    }
+
+    //Buscar usuario por correo electrónico
+    public Usuario buscarPorCorreo(String correoElectronico) {
+        return usuarioRepository.findByCorreoElectronico(correoElectronico)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+    }
+
+    //Buscar usuario por RUN
+    public Usuario buscarPorRun(String run) {
+        return usuarioRepository.findByRun(run)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
     }
 
 //Obtener usuario por ID
@@ -51,6 +73,11 @@ public class UsuarioService {
         u.setFechaNacimiento(usuario.getFechaNacimiento());
         u.setContrasenna(usuario.getContrasenna());
         u.setCorreoElectronico(usuario.getCorreoElectronico());
+        u.setTelefono(usuario.getTelefono());
+        u.setDireccionPrincipal(usuario.getDireccionPrincipal());
+        u.setComuna(usuario.getComuna());
+        u.setCiudad(usuario.getCiudad());
+        u.setRegion(usuario.getRegion());
     
         return usuarioRepository.save(u);
     }

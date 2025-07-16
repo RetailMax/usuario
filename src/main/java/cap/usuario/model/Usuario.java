@@ -36,6 +36,21 @@ public class Usuario {
     @Column(nullable=false)
     private Date fechaNacimiento;
 
+    @Column(nullable=false, length=15)
+    private String telefono;
+
+    @Column(nullable=false)
+    private String direccionPrincipal;
+
+    @Column(nullable=false)
+    private String comuna;
+
+    @Column(nullable=false)
+    private String ciudad;
+
+    @Column(nullable=false)
+    private String region;
+
     @OneToOne
     @JoinColumn(name = "rol_id")
     private Rol rolUsuario;

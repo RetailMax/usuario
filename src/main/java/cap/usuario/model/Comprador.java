@@ -5,7 +5,6 @@ import lombok.*;
 
 @Entity
 @Table(name = "comprador")
-@Data
 @EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
 @AllArgsConstructor
