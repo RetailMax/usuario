@@ -13,6 +13,7 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import cap.usuario.assemblers.UsuarioModelAssembler;
 import cap.usuario.model.Usuario;
@@ -48,7 +49,7 @@ public class UsuarioController {
 
     //Crear usuario
     @PostMapping(produces = MediaTypes.HAL_JSON_VALUE)
-    public ResponseEntity<EntityModel<Usuario>> crearUsuario(@RequestBody Usuario nuevoUsuario) {
+    public ResponseEntity<EntityModel<Usuario>> crearUsuario(@Valid @RequestBody Usuario nuevoUsuario) {
         Usuario usuarioRegistrado = usuarioService.registrarUsuario(nuevoUsuario);
         return ResponseEntity
             .created(linkTo(methodOn(UsuarioController.class).mostrarUsuarioPorId(usuarioRegistrado.getIdUsuario())).toUri())
@@ -59,7 +60,7 @@ public class UsuarioController {
     @PutMapping(value = "/perfil/{id}", produces = MediaTypes.HAL_JSON_VALUE)
     public ResponseEntity<EntityModel<Usuario>> actualizarPerfil(
         @PathVariable Integer id,
-        @RequestBody Usuario usuarioActualizado) {
+        @Valid @RequestBody Usuario usuarioActualizado) {
 
             usuarioActualizado.setIdUsuario(id);
             Usuario actualizado = usuarioService.actualizarUsuario(id, usuarioActualizado);

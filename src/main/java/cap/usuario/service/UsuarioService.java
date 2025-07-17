@@ -51,6 +51,7 @@ public class UsuarioService {
         u.setFechaNacimiento(usuario.getFechaNacimiento());
         u.setContrasenna(usuario.getContrasenna());
         u.setCorreoElectronico(usuario.getCorreoElectronico());
+        u.setRolUsuario(usuario.getRolUsuario()); // ✅ AGREGAR ACTUALIZACIÓN DEL ROL
     
         return usuarioRepository.save(u);
     }

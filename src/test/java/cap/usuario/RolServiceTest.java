@@ -64,4 +64,19 @@ public class RolServiceTest {
         rolService.eliminarRol(1); // CORREGIDO
         verify(rolRepository, times(1)).deleteById(1);
     }
+
+    @Test
+    void testEliminarRolNoExistente() {
+        // Configurar mock para simular que el rol NO existe
+        when(rolRepository.existsById(999)).thenReturn(false);
+        
+        // Ejecutar y verificar que se lanza la excepción
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            rolService.eliminarRol(999);
+        });
+        
+        assertEquals("Rol no encontrado", exception.getMessage());
+        verify(rolRepository, times(1)).existsById(999);
+        verify(rolRepository, never()).deleteById(999);
+    }
 }
