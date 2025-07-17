@@ -316,4 +316,42 @@ public class UsuarioServiceTest {
         verify(usuarioRepository, times(1)).findById(1);
         verify(usuarioRepository, times(1)).save(usuario);
     }
+
+    @Test
+    @DisplayName("actualizarUsuario - Verificar actualización del rol")
+    void testActualizarUsuario_VerificarActualizacionRol() {
+        // Crear nuevo rol
+        Rol nuevoRol = new Rol();
+        nuevoRol.setId(2);
+        nuevoRol.setNombre("COMPRADOR");
+
+        // Preparar usuario con nuevo rol
+        Usuario usuarioConNuevoRol = new Usuario();
+        usuarioConNuevoRol.setPNombre("Pedro");
+        usuarioConNuevoRol.setSNombre("Luis");
+        usuarioConNuevoRol.setAPaterno("García");
+        usuarioConNuevoRol.setAMaterno("Rodríguez");
+        usuarioConNuevoRol.setFechaNacimiento(Date.valueOf("1985-05-15"));
+        usuarioConNuevoRol.setContrasenna("newpassword456");
+        usuarioConNuevoRol.setCorreoElectronico("pedro.garcia@email.com");
+        usuarioConNuevoRol.setRolUsuario(nuevoRol); //  NUEVO ROL
+
+        // Configurar mocks
+        when(usuarioRepository.findById(1)).thenReturn(Optional.of(usuario));
+        when(usuarioRepository.save(any(Usuario.class))).thenReturn(usuario);
+
+        // Ejecutar
+        Usuario result = usuarioService.actualizarUsuario(1, usuarioConNuevoRol);
+
+        // Verificar que el rol se actualizó
+        assertNotNull(result);
+        assertNotNull(usuario.getRolUsuario(), "El rol no debe ser null");
+        assertEquals(nuevoRol.getId(), usuario.getRolUsuario().getId(), "El ID del rol debe coincidir");
+        assertEquals("COMPRADOR", usuario.getRolUsuario().getNombre(), "El nombre del rol debe ser COMPRADOR");
+        
+        verify(usuarioRepository, times(1)).findById(1);
+        verify(usuarioRepository, times(1)).save(usuario);
+        
+        System.out.println("actualizarUsuario - ROL actualizado correctamente");
+    }
 }

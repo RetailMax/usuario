@@ -70,6 +70,21 @@ public class DireccionEnvioServiceTest {
     }
 
     @Test
+    void testEliminarDireccionNoExistente() {
+        // Configurar mock para simular que la dirección NO existe
+        when(direccionEnvioRepository.existsById(999)).thenReturn(false);
+        
+        // Ejecutar y verificar que se lanza la excepción
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            direccionEnvioService.eliminarDireccion(999);
+        });
+        
+        assertEquals("Dirección no encontrada", exception.getMessage());
+        verify(direccionEnvioRepository, times(1)).existsById(999);
+        verify(direccionEnvioRepository, never()).deleteById(999);
+    }
+
+    @Test
     void testActualizarDireccion() {
         DireccionEnvio nuevaDireccion = new DireccionEnvio();
         nuevaDireccion.setDireccion("Avenida Siempre Viva 742");
