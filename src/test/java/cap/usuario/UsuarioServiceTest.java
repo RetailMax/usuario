@@ -6,11 +6,10 @@ import cap.usuario.repository.UsuarioRepository;
 import cap.usuario.service.UsuarioService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.DisplayName;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.junit.jupiter.api.DisplayName;
+import org.mockito.MockitoAnnotations;
 
 import java.sql.Date;
 import java.util.Arrays;
@@ -21,7 +20,7 @@ import java.util.Collections;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-@ExtendWith(MockitoExtension.class)
+@DisplayName("Tests unitarios para UsuarioService")
 public class UsuarioServiceTest {
 
     @Mock
@@ -35,6 +34,8 @@ public class UsuarioServiceTest {
 
     @BeforeEach
     void setUp() {
+        MockitoAnnotations.openMocks(this);
+        
         // Crear rol de prueba
         rol = new Rol();
         rol.setId(1);
@@ -301,6 +302,9 @@ public class UsuarioServiceTest {
 
         Usuario result = usuarioService.actualizarUsuario(1, usuarioActualizado);
 
+        // Verificar que el resultado no es null
+        assertNotNull(result);
+        
         // Verificar que los campos del usuario original se actualizaron
         assertEquals("NuevoNombre", usuario.getPNombre());
         assertEquals("NuevoSegundo", usuario.getSNombre());
