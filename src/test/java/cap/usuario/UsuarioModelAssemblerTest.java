@@ -16,15 +16,18 @@ import cap.usuario.assemblers.UsuarioModelAssembler;
 import cap.usuario.controller.UsuarioController;
 import cap.usuario.model.Usuario;
 
-@ExtendWith(MockitoExtension.class)
+@ExtendWith(MockitoExtension.class) //Habilita poderes de Mockito en esta clase de pruebas
+//Permite usar Mock (objetos falsos) y InjectMocks (inyección automática).
+//Prepara el entorno para probar UsuarioModelAssembler con dependencias falsas controlables
 class UsuarioModelAssemblerTest {
 
-    @InjectMocks
+    @InjectMocks //Es una anotación de Mockito que inyecta automáticamente los objetos falsos
+    //(Mock) en la clase que estás probando.
     private UsuarioModelAssembler usuarioModelAssembler;
 
     private Usuario usuario;
 
-    @BeforeEach
+    @BeforeEach //Código que se ejecuta antes de CADA Test
     void setUp() {
         usuario = new Usuario();
         usuario.setIdUsuario(1);
