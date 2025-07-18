@@ -17,22 +17,19 @@ public class Comprador extends Usuario{
     @Column(nullable=false)
     private String direccion;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(nullable=false)
     private Region region;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(nullable=false)
     private Ciudad ciudad;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(nullable=false)
     private Comuna comuna;
 
     @Column(nullable=false)
     private Integer codigoPostal;
-
-    @Column(nullable=false)
-    private String correoElectronico;
 
 }

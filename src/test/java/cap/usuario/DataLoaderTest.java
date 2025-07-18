@@ -31,6 +31,8 @@ public class DataLoaderTest {
     private ComunaRepository comunaRepository;
     @Mock
     private DireccionEnvioRepository direccionEnvioRepository;
+    @Mock
+    private UsuarioRepository usuarioRepository;
 
     @InjectMocks
     private DataLoader dataLoader;
@@ -43,7 +45,6 @@ public class DataLoaderTest {
     @Test
     void run_shouldLoadDataCorrectly() throws Exception {
         // Given
-        when(rolRepository.saveAll(anyList())).thenReturn(List.of(new Rol(), new Rol()));
         when(paisRepository.save(any(Pais.class))).thenReturn(new Pais());
         when(regionRepository.save(any(Region.class))).thenReturn(new Region());
         when(ciudadRepository.save(any(Ciudad.class))).thenReturn(new Ciudad());
@@ -62,14 +63,16 @@ public class DataLoaderTest {
         verify(regionRepository, times(1)).deleteAll();
         verify(paisRepository, times(1)).deleteAll();
         verify(rolRepository, times(1)).deleteAll();
+        verify(usuarioRepository, times(1)).deleteAll();
 
-        verify(rolRepository, times(1)).saveAll(anyList());
+        verify(rolRepository, times(1)).save(argThat(rol -> "COMPRADOR".equals(rol.getNombre())));
+        verify(rolRepository, times(1)).save(argThat(rol -> "ADMIN".equals(rol.getNombre())));
         verify(paisRepository, times(1)).save(any(Pais.class));
         verify(regionRepository, times(1)).save(any(Region.class));
         verify(ciudadRepository, times(1)).save(any(Ciudad.class));
         verify(comunaRepository, times(1)).save(any(Comuna.class));
 
-        verify(compradorRepository, times(10)).save(any(Comprador.class));
+        verify(compradorRepository, times(11)).save(any(Comprador.class));
         verify(direccionEnvioRepository, times(10)).save(any(DireccionEnvio.class));
     }
 }

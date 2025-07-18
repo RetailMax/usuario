@@ -36,14 +36,14 @@ public class Usuario {
     @Column(nullable=false)
     private Date fechaNacimiento;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "rol_id")
     private Rol rolUsuario;
 
     @Column(nullable=false)
     private String contrasenna;
 
-    @Column(nullable=false, unique=true, length=100)
+    @Column(nullable=true, unique=true, length=100)
     private String correoElectronico;
 
 }
