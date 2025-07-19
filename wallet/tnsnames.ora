@@ -4,9 +4,5 @@ fullstackusuario_low = (description= (retry_count=20)(retry_delay=3)(address=(pr
 
 fullstackusuario_medium = (description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.sa-santiago-1.oraclecloud.com))(connect_data=(service_name=g542004c9f3f047_fullstackusuario_medium.adb.oraclecloud.com))(security=(ssl_server_dn_match=yes)))
 
-fullstackusuario_tp = (description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.sa-santiago-1.oraclecloud.com))(connect_data=(service_name=g542004c9f3f047_fullstackusuario_tp.adb.oraclecloud.com))(security=(ssl_server_dn_match=yes)))
-
-fullstackusuario_tpurgent = (description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.sa-santiago-1.oraclecloud.com))(connect_data=(service_name=g542004c9f3f047_fullstackusuario_tpurgent.adb.oraclecloud.com))(security=(ssl_server_dn_match=yes)))
-
 
 

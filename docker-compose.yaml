@@ -2,9 +2,9 @@ version: '3.8'
 services:
   usuario:
     build:
-      context: ../usuario
+      context: .
     ports:
-      - "8083:8080"
+      - "8080:8080"
     volumes:
       - ./wallet:/app/wallet
     environment:

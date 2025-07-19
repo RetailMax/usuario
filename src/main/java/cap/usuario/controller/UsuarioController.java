@@ -14,6 +14,7 @@ import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 
 import cap.usuario.assemblers.UsuarioModelAssembler;
 import cap.usuario.model.Usuario;
@@ -50,6 +51,19 @@ public class UsuarioController {
     //Crear usuario
     @PostMapping(produces = MediaTypes.HAL_JSON_VALUE)
     public ResponseEntity<EntityModel<Usuario>> crearUsuario(@Valid @RequestBody Usuario nuevoUsuario) {
+        // Validación manual para campos críticos
+        if (nuevoUsuario.getRun() == null || nuevoUsuario.getRun().isEmpty()) {
+            throw new IllegalArgumentException("El campo RUN es obligatorio");
+        }
+        if (nuevoUsuario.getCorreoElectronico() == null || nuevoUsuario.getCorreoElectronico().isEmpty()) {
+            throw new IllegalArgumentException("El correo electrónico es obligatorio");
+        }
+        // Si es un Comprador, validar ciudad, region y comuna
+        if (nuevoUsuario instanceof cap.usuario.model.Comprador comprador) {
+            if (comprador.getCiudad() == null || comprador.getRegion() == null || comprador.getComuna() == null) {
+                throw new IllegalArgumentException("Ciudad, región y comuna son obligatorios para un comprador");
+            }
+        }
         Usuario usuarioRegistrado = usuarioService.registrarUsuario(nuevoUsuario);
         return ResponseEntity
             .created(linkTo(methodOn(UsuarioController.class).mostrarUsuarioPorId(usuarioRegistrado.getIdUsuario())).toUri())

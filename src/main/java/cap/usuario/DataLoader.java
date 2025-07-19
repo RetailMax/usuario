@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Profile("dev")
+
 @Component
 public class DataLoader implements CommandLineRunner {
 
@@ -28,28 +28,32 @@ public class DataLoader implements CommandLineRunner {
     private ComunaRepository comunaRepository;
     @Autowired
     private DireccionEnvioRepository direccionEnvioRepository;
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
     @Override
     public void run(String... args) throws Exception {
+        // Comentado temporalmente para evitar errores en Docker
+        // TODO: Habilitar cuando se resuelvan los problemas de base de datos
+        /*
         // SOLO PARA DESARROLLO: borrar todos los datos antes de cargar nuevos
         direccionEnvioRepository.deleteAll();
         compradorRepository.deleteAll();
+        usuarioRepository.deleteAll();
         comunaRepository.deleteAll();
         ciudadRepository.deleteAll();
         regionRepository.deleteAll();
         paisRepository.deleteAll();
         rolRepository.deleteAll();
 
-        final Faker faker = new Faker();
-
         // Crear roles
-        Rol compradorRol = new Rol();
-        compradorRol.setNombre("COMPRADOR");
+        Rol rolComprador = new Rol();
+        rolComprador.setNombre("COMPRADOR");
+        rolRepository.save(rolComprador);
 
-        Rol adminRol = new Rol();
-        adminRol.setNombre("ADMIN");
-
-        rolRepository.saveAll(List.of(compradorRol, adminRol));
+        Rol rolAdmin = new Rol();
+        rolAdmin.setNombre("ADMIN");
+        rolRepository.save(rolAdmin);
 
         // Crear país
         Pais chile = new Pais();
@@ -74,46 +78,58 @@ public class DataLoader implements CommandLineRunner {
         comuna.setCiudad(ciudad);
         comunaRepository.save(comuna);
 
-        // Crear 10 compradores con direcciones
+        // Crear usuario administrador (no comprador)
+        Comprador adminUser = new Comprador();
+        adminUser.setPNombre("Admin");
+        adminUser.setSNombre("User");
+        adminUser.setAPaterno("Administrador");
+        adminUser.setAMaterno("Sistema");
+        adminUser.setFechaNacimiento(new java.sql.Date(new java.util.Date().getTime()));
+        // Generar run y correo únicos para evitar duplicados
+        adminUser.setRun("10000000-" + faker.number().digit());
+        adminUser.setContrasenna("admin123");
+        adminUser.setCorreoElectronico("admin" + faker.number().numberBetween(1000, 9999) + "@sistema.com");
+        adminUser.setRolUsuario(rolAdmin);
+        adminUser.setTelefono("+569" + faker.number().numberBetween(10000000, 99999999));
+        adminUser.setDireccion("Calle Admin 123");
+        adminUser.setRegion(region);
+        adminUser.setCiudad(ciudad);
+        adminUser.setComuna(comuna);
+        adminUser.setCodigoPostal(faker.number().numberBetween(1000, 9999));
+        compradorRepository.save(adminUser);
+
+        // Crear compradores de prueba
         for (int i = 0; i < 10; i++) {
             Comprador comprador = new Comprador();
-
-            // Datos heredados desde Usuario
             comprador.setPNombre(faker.name().firstName());
             comprador.setSNombre(faker.name().firstName());
             comprador.setAPaterno(faker.name().lastName());
             comprador.setAMaterno(faker.name().lastName());
-
-            // Fecha de nacimiento realista (entre 18 y  años)
-            java.util.Date fechaNacimiento = faker.date().birthday(18, 80);
-            comprador.setFechaNacimiento(new java.sql.Date(fechaNacimiento.getTime()));
-
-            comprador.setRun(faker.number().numberBetween(10000000, 25000000) + "-" + faker.number().digit());
-            comprador.setContrasenna("123456");
-            comprador.setRolUsuario(compradorRol);
-
-            // Datos propios del Comprador
-            comprador.setTelefono(faker.number().numberBetween(900000000, 999999999));
+            comprador.setFechaNacimiento(new java.sql.Date(faker.date().birthday().getTime()));
+            comprador.setRun(faker.number().numberBetween(10000000, 99999999) + "-" + faker.number().digit());
+            comprador.setContrasenna("password123");
+            comprador.setCorreoElectronico(faker.internet().emailAddress());
+            comprador.setRolUsuario(rolComprador);
+            comprador.setTelefono("+569" + faker.number().numberBetween(10000000, 99999999));
             comprador.setDireccion(faker.address().streetAddress());
             comprador.setRegion(region);
             comprador.setCiudad(ciudad);
             comprador.setComuna(comuna);
             comprador.setCodigoPostal(faker.number().numberBetween(1000, 9999));
-            comprador.setCorreoElectronico(faker.internet().emailAddress());
-
-            // Guardar comprador (también guarda como Usuario por herencia)
             compradorRepository.save(comprador);
 
-            // Crear dirección asociada al comprador
+            // Crear dirección de envío para cada comprador
             DireccionEnvio direccion = new DireccionEnvio();
             direccion.setDireccion(faker.address().streetAddress());
             direccion.setCiudad(ciudad.getNombre());
             direccion.setRegion(region.getNombre());
             direccion.setComuna(comuna.getNombre());
             direccion.setCodigoPostal(faker.number().numberBetween(1000, 9999));
-            direccion.setUsuario(comprador); // comprador ya es un Usuario
+            direccion.setUsuario(comprador);
             direccionEnvioRepository.save(direccion);
         }
         System.out.println("DataLoader: Datos de desarrollo cargados correctamente.");
+        */
+        System.out.println("DataLoader deshabilitado temporalmente");
     }
 }
