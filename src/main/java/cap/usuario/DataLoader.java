@@ -33,10 +33,8 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        // Comentado temporalmente para evitar errores en Docker
-        // TODO: Habilitar cuando se resuelvan los problemas de base de datos
-        /*
-        // SOLO PARA DESARROLLO: borrar todos los datos antes de cargar nuevos
+        Faker faker = new Faker();
+        
         direccionEnvioRepository.deleteAll();
         compradorRepository.deleteAll();
         usuarioRepository.deleteAll();
@@ -46,7 +44,6 @@ public class DataLoader implements CommandLineRunner {
         paisRepository.deleteAll();
         rolRepository.deleteAll();
 
-        // Crear roles
         Rol rolComprador = new Rol();
         rolComprador.setNombre("COMPRADOR");
         rolRepository.save(rolComprador);
@@ -55,18 +52,15 @@ public class DataLoader implements CommandLineRunner {
         rolAdmin.setNombre("ADMIN");
         rolRepository.save(rolAdmin);
 
-        // Crear país
         Pais chile = new Pais();
         chile.setNombre("Chile");
         paisRepository.save(chile);
 
-        // Crear región
         Region region = new Region();
         region.setNombre("Región Metropolitana");
         region.setPais(chile);
         regionRepository.save(region);
 
-        // Crear ciudad y comuna
         Ciudad ciudad = new Ciudad();
         ciudad.setNombre("Santiago");
         ciudad.setRegion(region);
@@ -78,19 +72,17 @@ public class DataLoader implements CommandLineRunner {
         comuna.setCiudad(ciudad);
         comunaRepository.save(comuna);
 
-        // Crear usuario administrador (no comprador)
         Comprador adminUser = new Comprador();
         adminUser.setPNombre("Admin");
         adminUser.setSNombre("User");
         adminUser.setAPaterno("Administrador");
         adminUser.setAMaterno("Sistema");
         adminUser.setFechaNacimiento(new java.sql.Date(new java.util.Date().getTime()));
-        // Generar run y correo únicos para evitar duplicados
         adminUser.setRun("10000000-" + faker.number().digit());
         adminUser.setContrasenna("admin123");
         adminUser.setCorreoElectronico("admin" + faker.number().numberBetween(1000, 9999) + "@sistema.com");
         adminUser.setRolUsuario(rolAdmin);
-        adminUser.setTelefono("+569" + faker.number().numberBetween(10000000, 99999999));
+        adminUser.setTelefono(faker.number().numberBetween(10000000, 99999999));
         adminUser.setDireccion("Calle Admin 123");
         adminUser.setRegion(region);
         adminUser.setCiudad(ciudad);
@@ -98,7 +90,6 @@ public class DataLoader implements CommandLineRunner {
         adminUser.setCodigoPostal(faker.number().numberBetween(1000, 9999));
         compradorRepository.save(adminUser);
 
-        // Crear compradores de prueba
         for (int i = 0; i < 10; i++) {
             Comprador comprador = new Comprador();
             comprador.setPNombre(faker.name().firstName());
@@ -110,7 +101,7 @@ public class DataLoader implements CommandLineRunner {
             comprador.setContrasenna("password123");
             comprador.setCorreoElectronico(faker.internet().emailAddress());
             comprador.setRolUsuario(rolComprador);
-            comprador.setTelefono("+569" + faker.number().numberBetween(10000000, 99999999));
+            comprador.setTelefono(faker.number().numberBetween(10000000, 99999999));
             comprador.setDireccion(faker.address().streetAddress());
             comprador.setRegion(region);
             comprador.setCiudad(ciudad);
@@ -118,7 +109,6 @@ public class DataLoader implements CommandLineRunner {
             comprador.setCodigoPostal(faker.number().numberBetween(1000, 9999));
             compradorRepository.save(comprador);
 
-            // Crear dirección de envío para cada comprador
             DireccionEnvio direccion = new DireccionEnvio();
             direccion.setDireccion(faker.address().streetAddress());
             direccion.setCiudad(ciudad.getNombre());
@@ -129,7 +119,5 @@ public class DataLoader implements CommandLineRunner {
             direccionEnvioRepository.save(direccion);
         }
         System.out.println("DataLoader: Datos de desarrollo cargados correctamente.");
-        */
-        System.out.println("DataLoader deshabilitado temporalmente");
     }
 }
